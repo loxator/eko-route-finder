@@ -49,7 +49,8 @@ function App() {
             value={route}
             className="Input"
             required
-            pattern="(.*?)-([a-zA-Z]){1}"
+            //pattern="(.*?)-([a-zA-Z]){1}"
+            pattern="^([a-zA-z]{1})+(-[a-zA-Z]{1})*"
             title="Please enter text in the form of A-B-E"
           />
         </div>
