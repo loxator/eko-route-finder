@@ -1,4 +1,7 @@
-.Error {
+.routes__wrapper {
+  padding: 5%;
+}
+.routes__error {
   text-align: center;
   color: red;
   font-size: xx-large;

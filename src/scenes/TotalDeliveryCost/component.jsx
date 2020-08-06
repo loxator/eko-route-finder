@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./styles.css";
 import { computeTotalDeliveryCost } from "../../utils/helpers/helpers";
 
 function TotalDeliveryCost() {
@@ -17,11 +16,11 @@ function TotalDeliveryCost() {
   };
   return (
     <div>
-      <form className="Form" onSubmit={handleClick}>
+      <form className="app__form" onSubmit={handleClick}>
         <div>
           <label
             htmlFor="paths"
-            className="Label"
+            className="app__label"
             data-testid="app__label__paths"
           >
             Paths:
@@ -34,7 +33,7 @@ function TotalDeliveryCost() {
             }
             value={paths}
             id="paths"
-            className="Input"
+            className="app__input"
             required
             pattern="([a-zA-Z]{2}\d+(,||\s))+"
             title="Please enter text in the form of AB1,BC2,CD3"
@@ -44,7 +43,7 @@ function TotalDeliveryCost() {
         <div>
           <label
             htmlFor="route"
-            className="Label"
+            className="app__label"
             data-testid="app__label__routes"
           >
             Route:
@@ -57,9 +56,8 @@ function TotalDeliveryCost() {
               setRoute(e.target.value.toUpperCase().replace(/\s/g, ""))
             }
             value={route}
-            className="Input"
+            className="app__input"
             required
-            //pattern="(.*?)-([a-zA-Z]){1}"
             pattern="^([a-zA-z]{1})+(-[a-zA-Z]{1})*"
             title="Please enter text in the form of A-B-E"
             data-testid="app__input__routes"
@@ -68,11 +66,11 @@ function TotalDeliveryCost() {
         <input
           type="submit"
           value="Calculate"
-          className="btn"
+          className="app__btn"
           data-testid="app__button__calculate"
         />
       </form>
-      <p className="Result" data-testid="app__text__result">
+      <p className="app__result" data-testid="app__text__result">
         {result}
       </p>
     </div>

@@ -2,3 +2,30 @@
   min-height: 100vh;
   background-color: #282c34;
 }
+.app__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 30vh;
+}
+
+.app__label {
+  color: white;
+}
+
+.app__input {
+  width: 300px;
+  height: 30px;
+}
+
+.app__btn {
+  font-family: "Montserrat";
+  height: 30px;
+}
+
+.app__result {
+  text-align: center;
+  color: white;
+  font-size: xx-large;
+}

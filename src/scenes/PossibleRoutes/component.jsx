@@ -32,12 +32,12 @@ const PossibleRoutes = (props) => {
     } else setError(routesResult.text.message);
   };
   return (
-    <div>
-      <form className="Form" onSubmit={handleClick}>
+    <div className="routes__wrapper">
+      <form className="app__form" onSubmit={handleClick}>
         <div>
           <label
             htmlFor="paths"
-            className="Label"
+            className="app__label"
             data-testid="routes__label__paths"
           >
             Paths:
@@ -50,7 +50,7 @@ const PossibleRoutes = (props) => {
             }
             value={paths}
             id="paths"
-            className="Input"
+            className="app__input"
             required
             pattern="([a-zA-Z]{2}\d+(,||\s))+"
             title="Please enter text in the form of AB1,BC2,CD3"
@@ -60,7 +60,7 @@ const PossibleRoutes = (props) => {
         <div>
           <label
             htmlFor="source"
-            className="Label"
+            className="app__label"
             data-testid="routes__label__source"
           >
             Source:
@@ -73,7 +73,7 @@ const PossibleRoutes = (props) => {
             }
             value={source}
             id="paths"
-            className="Input"
+            className="app__input"
             required
             pattern="[a-zA-Z]{1}"
             title="Please enter a letter"
@@ -83,7 +83,7 @@ const PossibleRoutes = (props) => {
         <div>
           <label
             htmlFor="target"
-            className="Label"
+            className="app__label"
             data-testid="routes__label__target"
           >
             Target:
@@ -96,7 +96,7 @@ const PossibleRoutes = (props) => {
             }
             value={target}
             id="target"
-            className="Input"
+            className="app__input"
             required
             pattern="[a-zA-Z]{1}"
             title="Please enter a letter"
@@ -106,12 +106,12 @@ const PossibleRoutes = (props) => {
         <input
           type="submit"
           value="Calculate"
-          className="btn"
+          className="app__btn"
           data-testid="routes__button__calculate"
         />
       </form>
       {result.length && !error && (
-        <div className="Result" data-testid="routes__text__result">
+        <div className="app__result" data-testid="routes__text__result">
           <p>Routes found: {result.length}</p>
           {result.map((res) =>
             res.map((route, index) => <p key={index}>{route}</p>)
@@ -119,7 +119,7 @@ const PossibleRoutes = (props) => {
         </div>
       )}
       {error && (
-        <p className="Error" data-testid="routes__text__error">
+        <p className="routes__error" data-testid="routes__text__error">
           {error}
         </p>
       )}
