@@ -36,7 +36,7 @@ export default class Graph {
         //If lastNode matches end, we have reached our destination
         //So, push to result array
         if (lastNode === end) {
-          result.push([paths]);
+          result.push(paths);
         } else {
           //Else, get adjacent routes from current Node
           //Add those routes to the queue to be checked later
