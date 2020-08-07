@@ -11,50 +11,15 @@ export default class Graph {
     //directed graph
     this.adjacentList[node1].push(node2);
   }
-  showConnections() {
-    const allNodes = Object.keys(this.adjacentList);
-    for (let node of allNodes) {
-      let nodeConnections = this.adjacentList[node];
-      let connections = "";
-      let vertex;
-      for (vertex of nodeConnections) {
-        connections += vertex + " ";
-      }
-      console.log(node + "-->" + connections);
-    }
-  }
 
-  // getPossibleRoutesBFS = (start, end) => {
-  //   const queue = [start];
-  //   const visited = new Set();
-  //   let routes = [];
-  //   let count = 0;
-  //   while (queue.length > 0) {
-  //     const fromTown = queue.shift()["to"];
-  //     //routes.push(fromTown);
-  //     const destinations = this.adjacentList[fromTown];
-
-  //     if (destinations) {
-  //       for (const town of destinations) {
-  //         if (town.to === end) {
-  //           console.log(routes);
-  //           //routes = [];
-  //           count++;
-  //         }
-
-  //         if (!visited.has(town.to)) {
-  //           visited.add(town.to);
-  //           queue.push(town);
-  //         }
-  //       }
-  //     }
-  //   }
-  //   console.log(count);
-  // };
   getPossibleRoutesBFS = (start, end) => {
+    //Intialize result array
     let result = [];
+
+    //Initialize Queue
     let queue = [[start.to]];
     try {
+      //Error Checking
       if (!this.adjacentList[start.to]) {
         throw Error("The start route does not exist");
       }
@@ -62,11 +27,19 @@ export default class Graph {
         throw Error("The end route does not exist");
       }
       while (queue.length) {
+        //Get first element from queue
         let paths = queue.shift();
+
+        //Get the last node of the current path in Queue
         let lastNode = paths[paths.length - 1];
+
+        //If lastNode matches end, we have reached our destination
+        //So, push to result array
         if (lastNode === end) {
           result.push([paths]);
         } else {
+          //Else, get adjacent routes from current Node
+          //Add those routes to the queue to be checked later
           let neighbors = this.adjacentList[lastNode];
 
           if (neighbors) {
