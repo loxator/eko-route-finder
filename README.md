@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# EKO Test
 
-## Available Scripts
+This project aims to provide two solutions for delivery routes:
 
-In the project directory, you can run:
+- Total Delivery Cost - Find the total cost of a route by summation of their weigts
+- All Possible Routes - Use Breadth First Search to find all possible routes from point A to point B
 
-### `yarn start`
+---
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Running `yarn start` will install all dependencies and start the development server at `http://localhost:3000`
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Test
+Running `yarn test` will start the unit tests which picks up any files ending with suffix `.test.js`
 
-### `yarn build`
+---
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Total Delivery Cost
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This component will help in finding out if a path exists, given input as a graph and if it exists then calculate the total delivery cost of the route
 
-### `yarn eject`
+#### Input 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Paths - `AB1,AC4,AD10,BE3,CD4,CF2,DE1,EB3,EA2,FD1`
+- Route - `A-B-E`
+- Output - `4`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Possible Routes
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### NOTE
 
-## Learn More
+**This component will only accept Directed Acyclic Graphs (DAGs), if a Cyclic graph is given as input, the program will go in an infinite loop and hang. Also, the program cannot find routes if target and source are same**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+- Paths - `AB1,AC4,AD10,CD4,CF2,DE1,EB3,EA2,FD1`
+- Source - `A`
+- Target - `E`
+- Maximum Stops - `4` (If `0`, all possible routes without any stops are are shown. Else, the array gets filtered according to `maximumStops`)
+- Delivery Cost - `20` (If `0`, all possible routes without any cost are shown. Else, the array gets filtered according to `deliveryCost`)
+- Output :
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```
+3
 
-### Analyzing the Bundle Size
+ADE - 11
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+ACDE - 9
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ACFDE - 8
+```
+---
