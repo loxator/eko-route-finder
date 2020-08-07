@@ -8,6 +8,7 @@ const PossibleRoutes = (props) => {
   const [paths, setPaths] = useState("");
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
+  const [stops, setStops] = useState(0);
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
   const myGraph = new Graph();
@@ -24,13 +25,21 @@ const PossibleRoutes = (props) => {
     }
   };
 
+  const filterOutRoutesWithStops = (arrayOfRoutes, stops) => {
+    if (stops === 0) {
+      return arrayOfRoutes;
+    }
+
+    return arrayOfRoutes.filter((route) => route.length <= stops + 2);
+  };
+
   const handleClick = async (e) => {
     e.stopPropagation();
     e.preventDefault();
     populateGraph(paths.split(","));
     let routesResult = myGraph.getPossibleRoutesBFS({ to: source }, target);
     if (!routesResult.error) {
-      setResult(routesResult);
+      setResult(filterOutRoutesWithStops(routesResult, parseInt(stops, 10)));
     } else setError(routesResult.text.message);
   };
   return (
@@ -81,6 +90,20 @@ const PossibleRoutes = (props) => {
           maxLength="1"
         />
         <br />
+        <Input
+          labelTestId="routes__label__stops"
+          inputId="target"
+          inputTestId="routes__input__stops"
+          onChangeHandler={(e) => setStops(e.target.value.charAt(0))}
+          pattern="\d{1}"
+          title="Please enter a number between 1 - 9"
+          labelText="Maximum Stops:"
+          inputValue={stops}
+          type="number"
+          min="0"
+          max="9"
+        />
+        <br />
         <input
           type="submit"
           value="Calculate"
@@ -92,9 +115,9 @@ const PossibleRoutes = (props) => {
       {result.length && !error ? (
         <div className="app__result" data-testid="routes__text__result">
           <p>Routes found: {result.length}</p>
-          {result.map((res) =>
-            res.map((route, index) => <p key={index}>{route}</p>)
-          )}
+          {result.map((route, index) => (
+            <p key={index}>{route}</p>
+          ))}
         </div>
       ) : null}
       {error && (

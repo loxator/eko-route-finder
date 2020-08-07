@@ -17,6 +17,7 @@ describe("PossibleRoutes", () => {
     expect(getByTestId("routes__input__paths")).toBeDefined();
     expect(getByTestId("routes__input__source")).toBeDefined();
     expect(getByTestId("routes__input__target")).toBeDefined();
+    expect(getByTestId("routes__input__stops")).toBeDefined();
     expect(getByTestId("routes__button__calculate")).toBeDefined();
   });
 
@@ -63,6 +64,32 @@ describe("PossibleRoutes", () => {
       );
       expect(getByTestId("routes__text__result").textContent).toBe(
         "Routes found: 3EADEACDEACFD"
+      );
+    });
+    test("shows the result correctly for path from E to D with maximum 1 stop", async () => {
+      const { getByTestId, container } = render(componentToBeRendered);
+      await fireEvent.change(
+        container.querySelector('[data-testid="routes__input__paths"]'),
+        { target: { value: "AB1,AC4,AD10,CD4,CF2,DE1,EB3,EA2,FD1" } }
+      );
+      await fireEvent.change(
+        container.querySelector('[data-testid="routes__input__source"]'),
+        { target: { value: "E" } }
+      );
+      await fireEvent.change(
+        container.querySelector('[data-testid="routes__input__target"]'),
+        { target: { value: "D" } }
+      );
+      await fireEvent.change(
+        container.querySelector('[data-testid="routes__input__stops"]'),
+        { target: { value: "1" } }
+      );
+      await fireEvent.click(
+        container.querySelector('[data-testid="routes__button__calculate"]'),
+        { stopPropagation: () => null, preventDefault: () => null }
+      );
+      expect(getByTestId("routes__text__result").textContent).toBe(
+        "Routes found: 1EAD"
       );
     });
     test("should display error if source path does not exist", async () => {
