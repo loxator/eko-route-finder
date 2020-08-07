@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Graph from "../../models/Graph";
 import Input from "../../components/Input/component";
 import { Link } from "react-router-dom";
+import { computeTotalDeliveryCost } from "../../utils/helpers/helpers";
 import "./styles.css";
 
 const PossibleRoutes = (props) => {
@@ -9,7 +10,8 @@ const PossibleRoutes = (props) => {
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
   const [stops, setStops] = useState(0);
-  const [result, setResult] = useState("");
+  const [cost, setCost] = useState(0);
+  const [result, setResult] = useState({});
   const [error, setError] = useState("");
   const myGraph = new Graph();
 
@@ -33,13 +35,32 @@ const PossibleRoutes = (props) => {
     return arrayOfRoutes.filter((route) => route.length <= stops + 2);
   };
 
+  const filterOutRoutesWithCost = (arrayOfRoutes, cost) => {
+    const result = [];
+    const routesWithDeliveryCost = arrayOfRoutes.map((route) =>
+      computeTotalDeliveryCost(route, paths.split(","))
+    );
+
+    routesWithDeliveryCost.map((cost, index) =>
+      result.push({ route: arrayOfRoutes[index], cost: cost })
+    );
+
+    if (cost === 0) return result;
+    return result.filter((route) => route.cost <= cost);
+  };
+
   const handleClick = async (e) => {
     e.stopPropagation();
     e.preventDefault();
     populateGraph(paths.split(","));
     let routesResult = myGraph.getPossibleRoutesBFS({ to: source }, target);
     if (!routesResult.error) {
-      setResult(filterOutRoutesWithStops(routesResult, parseInt(stops, 10)));
+      setResult(
+        filterOutRoutesWithCost(
+          filterOutRoutesWithStops(routesResult, parseInt(stops, 10)),
+          parseInt(cost, 10)
+        )
+      );
     } else setError(routesResult.text.message);
   };
   return (
@@ -92,7 +113,7 @@ const PossibleRoutes = (props) => {
         <br />
         <Input
           labelTestId="routes__label__stops"
-          inputId="target"
+          inputId="stops"
           inputTestId="routes__input__stops"
           onChangeHandler={(e) => setStops(e.target.value.charAt(0))}
           pattern="\d{1}"
@@ -102,6 +123,22 @@ const PossibleRoutes = (props) => {
           type="number"
           min="0"
           max="9"
+        />
+        <br />
+        <Input
+          labelTestId="routes__label__cost"
+          inputId="cost"
+          inputTestId="routes__input__cost"
+          onChangeHandler={(e) =>
+            setCost(e.target.value.charAt(0) + e.target.value.charAt(1))
+          }
+          pattern="\d{2}"
+          title="Please enter a number between 1 - 99"
+          labelText="Maximum Cost:"
+          inputValue={cost}
+          type="number"
+          min="0"
+          max="99"
         />
         <br />
         <input
@@ -116,7 +153,9 @@ const PossibleRoutes = (props) => {
         <div className="app__result" data-testid="routes__text__result">
           <p>Routes found: {result.length}</p>
           {result.map((route, index) => (
-            <p key={index}>{route}</p>
+            <p key={index}>
+              {route.route} - {route.cost}
+            </p>
           ))}
         </div>
       ) : null}
