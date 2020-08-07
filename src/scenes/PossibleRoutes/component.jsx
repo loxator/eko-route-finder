@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Graph from "../../models/Graph";
+import Graph from "../../models/Graph/Graph";
 import Input from "../../components/Input/component";
 import { Link } from "react-router-dom";
 import { computeTotalDeliveryCost } from "../../utils/helpers/helpers";
@@ -61,7 +61,7 @@ const PossibleRoutes = (props) => {
           parseInt(cost, 10)
         )
       );
-    } else setError(routesResult.text.message);
+    } else setError(routesResult.text);
   };
   return (
     <div>

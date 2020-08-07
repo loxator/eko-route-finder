@@ -12,7 +12,7 @@ export default class Graph {
     this.adjacentList[node1].push(node2);
   }
 
-  getPossibleRoutesBFS = (start, end) => {
+  getPossibleRoutesBFS(start, end) {
     //Intialize result array
     let result = [];
 
@@ -51,9 +51,9 @@ export default class Graph {
         }
       }
     } catch (error) {
-      return { error: true, text: error };
+      return { error: true, text: error.message };
     }
 
     return result;
-  };
+  }
 }
