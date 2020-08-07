@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Graph from "../../models/Graph";
 import Input from "../../components/Input/component";
+import { Link } from "react-router-dom";
 import "./styles.css";
 
 const PossibleRoutes = (props) => {
@@ -33,7 +34,10 @@ const PossibleRoutes = (props) => {
     } else setError(routesResult.text.message);
   };
   return (
-    <div className="routes__wrapper">
+    <div>
+      <Link className="app__link" to="/">
+        Total Delivery Cost
+      </Link>
       <form className="app__form" onSubmit={handleClick}>
         <h2>Possible Routes</h2>
         <Input

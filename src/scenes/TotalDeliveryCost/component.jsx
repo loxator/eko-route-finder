@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { computeTotalDeliveryCost } from "../../utils/helpers/helpers";
 import Input from "../../components/Input/component";
+import { Link } from "react-router-dom";
 function TotalDeliveryCost() {
   const [paths, setPaths] = useState("");
   const [route, setRoute] = useState("");
@@ -16,6 +17,9 @@ function TotalDeliveryCost() {
   };
   return (
     <div>
+      <Link className="app__link" to="/routes">
+        Possible Routes
+      </Link>
       <form className="app__form" onSubmit={handleClick}>
         <h2>Total Delivery Cost</h2>
         <Input
