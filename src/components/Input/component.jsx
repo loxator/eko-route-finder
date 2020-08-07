@@ -1,5 +1,5 @@
 import React from "react";
-import { func, string } from "prop-types";
+import { func, string, number, oneOfType } from "prop-types";
 
 const Input = ({
   labelTestId,
@@ -10,6 +10,7 @@ const Input = ({
   title,
   labelText,
   inputValue,
+  type,
   ...props
 }) => {
   return (
@@ -19,7 +20,7 @@ const Input = ({
       </label>
       <br />
       <input
-        type="text"
+        type={type || "text"}
         onChange={onChangeHandler}
         value={inputValue}
         id={inputId}
@@ -42,7 +43,8 @@ Input.propTypes = {
   pattern: string.isRequired,
   title: string.isRequired,
   labelText: string.isRequired,
-  inputValue: string.isRequired,
+  inputValue: oneOfType([string.isRequired, number.isRequired]),
+  type: string,
 };
 
 export default Input;
