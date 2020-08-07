@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Graph from "../../models/Graph";
+import Input from "../../components/Input/component";
 import "./styles.css";
 
 const PossibleRoutes = (props) => {
   const [paths, setPaths] = useState("");
-  const [source, setSournce] = useState("");
+  const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
@@ -34,75 +35,48 @@ const PossibleRoutes = (props) => {
   return (
     <div className="routes__wrapper">
       <form className="app__form" onSubmit={handleClick}>
-        <div>
-          <label
-            htmlFor="paths"
-            className="app__label"
-            data-testid="routes__label__paths"
-          >
-            Paths:
-          </label>
-          <br></br>
-          <input
-            type="text"
-            onChange={(e) =>
-              setPaths(e.target.value.toUpperCase().replace(/\s/g, ""))
-            }
-            value={paths}
-            id="paths"
-            className="app__input"
-            required
-            pattern="([a-zA-Z]{2}\d+(,||\s))+"
-            title="Please enter text in the form of AB1,BC2,CD3"
-            data-testid="routes__input__paths"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="source"
-            className="app__label"
-            data-testid="routes__label__source"
-          >
-            Source:
-          </label>
-          <br></br>
-          <input
-            type="source"
-            onChange={(e) =>
-              setSournce(e.target.value.toUpperCase().replace(/\s/g, ""))
-            }
-            value={source}
-            id="paths"
-            className="app__input"
-            required
-            pattern="[a-zA-Z]{1}"
-            title="Please enter a letter"
-            data-testid="routes__label__source"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="target"
-            className="app__label"
-            data-testid="routes__label__target"
-          >
-            Target:
-          </label>
-          <br></br>
-          <input
-            type="text"
-            onChange={(e) =>
-              setTarget(e.target.value.toUpperCase().replace(/\s/g, ""))
-            }
-            value={target}
-            id="target"
-            className="app__input"
-            required
-            pattern="[a-zA-Z]{1}"
-            title="Please enter a letter"
-            data-testid="routes__input__target"
-          />
-        </div>
+        <h2>Possible Routes</h2>
+        <Input
+          labelTestId="routes__label__paths"
+          inputId="paths"
+          inputTestId="routes__input__paths"
+          onChangeHandler={(e) =>
+            setPaths(e.target.value.toUpperCase().replace(/\s/g, ""))
+          }
+          pattern="([a-zA-Z]{2}\d+(,||\s))+"
+          title="Please enter text in the form of AB1,BC2,CD3"
+          labelText="Paths:"
+          inputValue={paths}
+        />
+        <br />
+        <Input
+          labelTestId="routes__label__source"
+          inputId="source"
+          inputTestId="routes__input__source"
+          onChangeHandler={(e) =>
+            setSource(e.target.value.toUpperCase().replace(/\s/g, ""))
+          }
+          pattern="[a-zA-Z]{1}"
+          title="Please enter a letter"
+          labelText="Source:"
+          inputValue={source}
+          maxLength="1"
+        />
+        <br />
+        <Input
+          labelTestId="routes__label__target"
+          inputId="target"
+          inputTestId="routes__input__target"
+          onChangeHandler={(e) =>
+            setTarget(e.target.value.toUpperCase().replace(/\s/g, ""))
+          }
+          pattern="[a-zA-Z]{1}"
+          title="Please enter a letter"
+          labelText="Target:"
+          inputValue={target}
+          maxLength="1"
+        />
+        <br />
         <input
           type="submit"
           value="Calculate"
@@ -110,14 +84,15 @@ const PossibleRoutes = (props) => {
           data-testid="routes__button__calculate"
         />
       </form>
-      {result.length && !error && (
+      <br />
+      {result.length && !error ? (
         <div className="app__result" data-testid="routes__text__result">
           <p>Routes found: {result.length}</p>
           {result.map((res) =>
             res.map((route, index) => <p key={index}>{route}</p>)
           )}
         </div>
-      )}
+      ) : null}
       {error && (
         <p className="routes__error" data-testid="routes__text__error">
           {error}

@@ -55,7 +55,6 @@ export default class Graph {
     let result = [];
     let queue = [[start.to]];
     try {
-      console.log(this.adjacentList[start.to]);
       if (!this.adjacentList[start.to]) {
         throw Error("The start route does not exist");
       }
